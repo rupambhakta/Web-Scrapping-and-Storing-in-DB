@@ -16,6 +16,8 @@ FEEDS = {
    'booksdata.json' : {'format': 'json'}
 }
 
+# USER_AGENT = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36'
+
 ADDONS = {}
 
 
@@ -64,7 +66,7 @@ DOWNLOAD_DELAY = 1
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    "Bookscraper.pipelines.BookScraperPipeline": 300,
-   "Bookscraper.pipelines.SaveToMySQLPipeline": 400,
+   # "Bookscraper.pipelines.SaveToMySQLPipeline": 400,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
