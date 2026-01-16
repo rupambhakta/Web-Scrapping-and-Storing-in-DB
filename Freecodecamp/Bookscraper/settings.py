@@ -19,7 +19,21 @@ FEEDS = {
 SCRAPEOPS_API_KEY = '9244dd31-7fde-4342-9943-ab522675602c'
 SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
 SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
-SCRAPEOPS_NUM_RESULTS = 50
+SCRAPEOPS_NUM_RESULTS = 5
+
+ROTATING_PROXY_LIST = [
+    '217.197.151.181:5678',
+    '92.205.107.159:56013',
+    '185.46.10.13:1080',
+]
+
+
+PROXY_USER = 'username'
+PROXY_PASSWORD = 'password'
+PROXY_ENDPOINT = 'gate.smartproxy.com'
+PROXY_PORT = '7000'
+
+# ROTATING_PROXY_LIST_PATH = ""
 
 # USER_AGENT = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36'
 
@@ -61,6 +75,9 @@ DOWNLOADER_MIDDLEWARES = {
    # "Bookscraper.middlewares.BookscraperDownloaderMiddleware": 543,
    # "Bookscraper.middlewares.ScrapeOpsFakeUserAgentMiddleware": 400,
    "Bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
+   # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+   # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+   # 'rotating_proxies.middlewares.MyProxyMiddleware': 350,
 }
 
 # Enable or disable extensions

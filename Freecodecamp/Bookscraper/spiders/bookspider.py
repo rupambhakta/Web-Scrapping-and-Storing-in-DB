@@ -1,6 +1,14 @@
 import scrapy
 from Bookscraper.items import BookItem
-import random
+from urllib.parse import urlencode
+
+API_KEY = '9244dd31-7fde-4342-9943-ab522675602c'
+
+def get_proxy_url(url):
+    payload = {'api_key': API_KEY, 'url':url}
+    proxy_url = 'https://proxy.scrapeops.io/v1/?' + urlencode(payload)
+    return proxy_url
+
 
 class BookspiderSpider(scrapy.Spider):
     name = "bookspider"
@@ -12,6 +20,9 @@ class BookspiderSpider(scrapy.Spider):
             'booksdata.json': {'format': 'json', 'overwrite': True},
         }
     }
+    
+    def start_requests(self):
+        yield scrapy.Request(url=get_proxy_url(self.start_urls[0]),callback=self.parse)
 
     def parse(self, response):
         books = response.css('article.product_pod')
@@ -24,16 +35,18 @@ class BookspiderSpider(scrapy.Spider):
             else:
                 book_url = 'https://books.toscrape.com/catalogue/' + relative_url
                 
-            yield response.follow(book_url, callback = self.parse_book_page)
+            # yield response.follow(book_url, callback = self.parse_book_page)
+            yield response.Request(url=get_proxy_url(book_url), callback = self.parse_book_page)
         
+        # next page
         next_page = response.css('li.next a ::attr(href)').get()
         if next_page is not None:
-            if 'catalogue/' in relative_url:
-                book_url = 'https://books.toscrape.com/' + relative_url
+            if 'catalogue/' in next_page:
+                next_page_url = 'https://books.toscrape.com/' + next_page
             else:
-                book_url = 'https://books.toscrape.com/catalogue/' + relative_url
+                next_page_url = 'https://books.toscrape.com/catalogue/' + next_page
                 
-            yield response.follow(book_url, callback = self.parse_book_page)
+            yield response.Request(url=get_proxy_url(next_page_url), callback = self.parse_book_page)
         
     def parse_book_page(self,response):
         table_rows = response.css("table tr")
