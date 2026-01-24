@@ -37,6 +37,7 @@ PROXY_PORT = '7000'
 # SCRAPEOPS_API_KEY = '9244dd31-7fde-4342-9943-ab522675602c'
 SCRAPEOPS_PROXY_ENABLED = True
 
+SCRAPEOPS_PROXY_SETTINGS = {'country':'us'} # Will send all the request via US ip address.
 
 # ROTATING_PROXY_LIST_PATH = ""
 

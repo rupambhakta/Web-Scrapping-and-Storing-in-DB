@@ -69,4 +69,4 @@ class BookspiderSpider(scrapy.Spider):
         
         yield book_item
         
-#2.04
+#3:18
