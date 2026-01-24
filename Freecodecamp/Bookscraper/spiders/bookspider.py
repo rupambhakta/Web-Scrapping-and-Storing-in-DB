@@ -22,7 +22,7 @@ class BookspiderSpider(scrapy.Spider):
     }
     
     def start_requests(self):
-        yield scrapy.Request(url=get_proxy_url(self.start_urls[0]),callback=self.parse)
+        yield scrapy.Request(url=self.start_urls[0],callback=self.parse)
 
     def parse(self, response):
         books = response.css('article.product_pod')
@@ -36,7 +36,7 @@ class BookspiderSpider(scrapy.Spider):
                 book_url = 'https://books.toscrape.com/catalogue/' + relative_url
                 
             # yield response.follow(book_url, callback = self.parse_book_page)
-            yield scrapy.Request(url=get_proxy_url(book_url), callback = self.parse_book_page)
+            yield scrapy.Request(url=book_url, callback = self.parse_book_page)
         
         # next page
         next_page = response.css('li.next a ::attr(href)').get()
@@ -46,7 +46,7 @@ class BookspiderSpider(scrapy.Spider):
             else:
                 next_page_url = 'https://books.toscrape.com/catalogue/' + next_page
                 
-            yield scrapy.Request(url=get_proxy_url(next_page_url), callback = self.parse)
+            yield scrapy.Request(url=next_page_url, callback = self.parse)
         
     def parse_book_page(self,response):
         table_rows = response.css("table tr")

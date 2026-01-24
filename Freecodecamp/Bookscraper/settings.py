@@ -34,6 +34,8 @@ PROXY_ENDPOINT = 'gate.smartproxy.com'
 PROXY_PORT = '7000'
 
 
+# SCRAPEOPS_API_KEY = '9244dd31-7fde-4342-9943-ab522675602c'
+SCRAPEOPS_PROXY_ENABLED = True
 
 
 # ROTATING_PROXY_LIST_PATH = ""
@@ -77,10 +79,11 @@ DOWNLOAD_DELAY = 1
 DOWNLOADER_MIDDLEWARES = {
    # "Bookscraper.middlewares.BookscraperDownloaderMiddleware": 543,
    # "Bookscraper.middlewares.ScrapeOpsFakeUserAgentMiddleware": 400,
-   "Bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
+   # "Bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware": 400,
    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
    # 'rotating_proxies.middlewares.MyProxyMiddleware': 350,
+   'scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk': 725,
 }
 
 # Enable or disable extensions
