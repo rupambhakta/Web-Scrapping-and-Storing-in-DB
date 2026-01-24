@@ -72,10 +72,9 @@ class BookScraperPipeline:
         
         return item
     
-import mysql.connector
-
 class SaveToMySQLPipeline:
     def __init__(self):
+        import mysql.connector
         self.conn = mysql.connector.connect(
             host = 'localhost',
             user = 'root',
@@ -159,4 +158,4 @@ class SaveToMySQLPipeline:
     def close_spider(self,spider):
         ## Close cursor $ connection to database
         self.cur.close()
-        self.conn.close()
+        # self.conn.close()

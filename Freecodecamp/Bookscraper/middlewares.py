@@ -179,18 +179,31 @@ class ScrapeOpsFakeBrowserHeaderAgentMiddleware:
     def process_request(self, request, spider):
         random_browser_header = self._get_random_browser_header()
 
-        request.headers['accept-language'] = random_browser_header['accept-language']
-        request.headers['sec-fetch-user'] = random_browser_header['sec-fetch-user']
-        request.headers['sec-fetch-mod'] = random_browser_header['sec-fetch-mode']
-        request.headers['sec-fetch-site'] = random_browser_header['sec-fetch-site']
-        request.headers['sec-ch-ua-platform'] = random_browser_header['sec-ch-ua-platform']
-        request.headers['sec-ch-ua-mobile'] = random_browser_header['sec-ch-ua-mobile']
-        request.headers['sec-ch-ua'] = random_browser_header['sec-ch-ua']
-        request.headers['accept'] = random_browser_header['accept']
-        request.headers['user-agent'] = random_browser_header['user-agent']
-        request.headers['upgrade-insecure-requests'] = random_browser_header.get(
-            'upgrade-insecure-requests'
-        )
+        def pick(header_key):
+            if header_key in random_browser_header:
+                return random_browser_header[header_key]
+            lower_key = header_key.lower()
+            if lower_key in random_browser_header:
+                return random_browser_header[lower_key]
+            return None
+
+        header_map = {
+            'accept-language': 'accept-language',
+            'sec-fetch-user': 'sec-fetch-user',
+            'sec-fetch-mode': 'sec-fetch-mode',
+            'sec-fetch-site': 'sec-fetch-site',
+            'sec-ch-ua-platform': 'sec-ch-ua-platform',
+            'sec-ch-ua-mobile': 'sec-ch-ua-mobile',
+            'sec-ch-ua': 'sec-ch-ua',
+            'accept': 'accept',
+            'user-agent': 'user-agent',
+            'upgrade-insecure-requests': 'upgrade-insecure-requests',
+        }
+
+        for request_key, source_key in header_map.items():
+            value = pick(source_key)
+            if value is not None:
+                request.headers[request_key] = value
         
         print("***************** NEW HEADER ATTACHED ***************")
         print(request.headers)
